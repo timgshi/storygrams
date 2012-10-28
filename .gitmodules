@@ -4,3 +4,9 @@
 [submodule "storygram/Frameworks/python-instagram"]
 	path = storygram/Frameworks/python-instagram
 	url = https://github.com/Instagram/python-instagram.git
+[submodule "Frameworks/ParsePy"]
+	path = Frameworks/ParsePy
+	url = https://github.com/timgshi/ParsePy.git
+[submodule "Frameworks/python-instagram"]
+	path = Frameworks/python-instagram
+	url = https://github.com/Instagram/python-instagram.git
