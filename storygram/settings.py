@@ -155,3 +155,6 @@ LOGGING = {
 import dj_database_url
 DATABASES['default'] =  dj_database_url.config()
 
+INSTAGRAM_CLIENT_ID = '5c890e1f2d8c4d4aaa81af3fe6c06fb7'
+INSTAGRAM_CLIENT_SECRET = '4b7e117d65f6421c8451e741896eb756'
+
