@@ -27,7 +27,10 @@ def subscription(request):
 					likes.append(parse_user_from_instagram(user))
 				parse_photo.likes = likes;
 				comments = []
-				for 
+				for comment in photo.comments:
+					comments.appent(parse_comment_from_instagram(comment))
+				parse_photo.comments(comments)
+				parse_photo.location = parse_location_from_instagram(photo.location)
 				parse_photo.save()
 			except AttributeError:
 				pass
@@ -59,5 +62,14 @@ def parse_comment_from_instagram(comment):
 		newComment.save()
 		return newComment
 
-
+def parse_location_from_instagram(location):
+	locationResponse = ParsePy.ParseQuery("instagram_location").equal("instagram_id", location.id).fetch()
+	if locationResponse[0] != None:
+		return locationResponse[0]
+	else:
+		newLocation = ParsePy.ParseObject("instagram_location")
+		newLocation.instagram_id = location.id
+		newLocation.name = location.name
+		newLocation.point = ParsePy.ParseGeoPoint(location.point.latitude, locatoin.point.longitude)
+		return newLocation
 
