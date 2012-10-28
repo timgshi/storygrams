@@ -5,5 +5,5 @@ from django.conf.urls import patterns, include, url
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^subscription/$', 'storygram.instagram_loader.views.subscription'),
+    url('', include('instagram_loader.urls')),
 )
