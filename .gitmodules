@@ -10,3 +10,6 @@
 [submodule "Frameworks/python-instagram"]
 	path = Frameworks/python-instagram
 	url = https://github.com/Instagram/python-instagram.git
+[submodule "Frameworks/instagram"]
+	path = Frameworks/instagram
+	url = https://github.com/Instagram/python-instagram.git
