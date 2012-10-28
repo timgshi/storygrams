@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from Frameworks import ParsePy
 import json
-import instagram
+from instagram import InstagramAPI
 
 def index(request):
 	print "index"
@@ -16,7 +16,48 @@ def subscription(request):
 		subscription_objects = json.loads(request.body)
 		api = InstagramAPI(client_id=INSTAGRAM_CLIENT_ID, client_secret=INSTAGRAM_CLIENT_SECRET)
 		for obj in subscription_objects:
-			photo = api.media(obj['object_id'])
-			print photo
+			try:
+				photo = api.media(obj['object_id'])
+				parse_photo = ParsePy.ParseObject("instagram_photo")
+				parse_photo.url = photo.images['standard_resolution'].url
+				parse_photo.url_thumb = photo.images['thumbnail'].url
+				parse_photo.timestamp = photo.created_time
+				likes = []
+				for user in photo.likes:
+					likes.append(parse_user_from_instagram(user))
+				parse_photo.likes = likes;
+				comments = []
+				for 
+				parse_photo.save()
+			except AttributeError:
+				pass
 		print request
+
+def parse_user_from_instagram(user):
+	userResponse = ParsePy.ParseQuery("instagram_user").equal("instagram_id", user.id).fetch()
+	if userResponse[0] != None:
+		return userResponse[0]
+	else:
+		newUser = ParsePy.ParseObject("instagram_user")
+		newUser.username = user.username
+		newUser.instagram_id = user.id
+		newUser.full_name = user.full_name
+		newUser.profile_picture = user.profile_picture
+		newUser.save()
+		return newUser
+
+def parse_comment_from_instagram(comment):
+	commentResponse = ParsePy.ParseQuery("instagram_comment").equal("instagram_id", comment.id).fetch()
+	if commentResponse[0] != None:
+		return commentResponse[0]
+	else:
+		newComment = ParsePy.ParseObject("instagram_comment")
+		newComment.user = parse_user_from_instagram(comment.user)
+		newComment.instagram_id = comment.id
+		newComment.timestamp = comment.created_at
+		newComment.text = comment.text
+		newComment.save()
+		return newComment
+
+
 
